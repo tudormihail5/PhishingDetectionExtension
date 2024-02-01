@@ -1,3 +1,20 @@
+let csrfToken;
+
+function getCsrfToken() {
+    // Get the CSRF token from the backend server
+    fetch('http://127.0.0.1:8000/csrf_token/', {
+        // Include cookies
+        credentials: 'include'
+    }).then(response => response.json())
+    .then(data => {
+        // Store the CSRF token inside the global variable
+        csrfToken = data.csrfToken;
+    }).catch(error => console.error('Error:', error));
+}
+
+// Fetch a new CSRF token when the extension icon is clicked
+getCsrfToken();
+
 // Fetch the current tab URL when the popup is loaded
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     var activeTab = tabs[0];
@@ -25,11 +42,12 @@ function sendUrlToBackground(url, isEnglish) {
     const resultElement = document.getElementById('result');
     // Show analysing message
     analysingMessage.style.display = 'block';
-    // Send the message to the background scripts
+    // Send the message to the background scripts, including the CSRF token
     chrome.runtime.sendMessage({
         action: 'checkPhishing',
         url: url,
-        isEnglish: isEnglish
+        isEnglish: isEnglish,
+        csrfToken: csrfToken
     }, response => {
         // Hide analysing message and show done message
         fadeOutElement(analysingMessage, () => {
@@ -87,7 +105,7 @@ function displayResults(results) {
 // HTML animations then execute the callback function
 function fadeOutElement(element, callback) {
     element.classList.add('fade-out');
-    // Delay between removing it
+    // Delay before removing it
     setTimeout(() => {
         element.style.display = 'none';
         element.classList.remove('fade-out');
@@ -98,7 +116,7 @@ function fadeOutElement(element, callback) {
 function fadeInElement(element, callback) {
     element.style.display = 'block';
     element.classList.add('fade-in');
-    // Delay between removing it
+    // Delay before removing it
     setTimeout(() => {
         element.classList.remove('fade-in');
         if (callback) callback();
