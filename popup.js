@@ -44,6 +44,8 @@ function sendUrlToBackground(url, isEnglish) {
                         displayResults(response.result.detailed_results);
                     } else {
                         resultElement.textContent = 'Unexpected error!';
+                        // Add class to element
+                        resultElement.classList.add('error-message');
                     }
                 }, 2500);
             });
@@ -85,6 +87,7 @@ function displayResults(results) {
 // HTML animations then execute the callback function
 function fadeOutElement(element, callback) {
     element.classList.add('fade-out');
+    // Delay between removing it
     setTimeout(() => {
         element.style.display = 'none';
         element.classList.remove('fade-out');
@@ -95,6 +98,7 @@ function fadeOutElement(element, callback) {
 function fadeInElement(element, callback) {
     element.style.display = 'block';
     element.classList.add('fade-in');
+    // Delay between removing it
     setTimeout(() => {
         element.classList.remove('fade-in');
         if (callback) callback();
