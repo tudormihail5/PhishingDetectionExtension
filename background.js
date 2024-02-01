@@ -1,3 +1,20 @@
+let csrfToken;
+
+function getCsrfToken() {
+    // Get the CSRF token from the backend server
+    fetch('http://127.0.0.1:8000/csrf_token/', {
+        // Include cookies
+        credentials: 'include'
+    }).then(response => response.json())
+    .then(data => {
+        // Store the CSRF token inside the global variable
+        csrfToken = data.csrfToken;
+    }).catch(error => console.error('Error:', error));
+}
+
+// Get the CSRF token when the extension is loaded
+getCsrfToken();
+
 // Function to listen for messages from popup scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Request to check an URL for phishing
@@ -25,7 +42,9 @@ async function checkUrl(url, isEnglish) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': csrfToken
             },
+            credentials: 'include',
             // Send the URL and the 'isEnglish' choice
             body: `url=${encodeURIComponent(url)}&isEnglish=${isEnglish}`
         });
