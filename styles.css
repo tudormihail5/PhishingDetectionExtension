@@ -160,3 +160,8 @@ div {
 .swipe-right {
     animation: swipeInRight 0.5s ease-out forwards;
 }
+
+.error-message {
+    color: white;
+    font-weight: bold;
+}
