@@ -16,7 +16,7 @@ function getCsrfToken() {
 getCsrfToken();
 
 // Fetch the current tab URL when the popup is loaded
-chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var activeTab = tabs[0];
     // Add event listeners to buttons
     document.getElementById('english-btn').addEventListener('click', function() {
