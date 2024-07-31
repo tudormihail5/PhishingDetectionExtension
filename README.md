@@ -2,9 +2,11 @@
 
 ### What it does:
 
-The phishing detection software is complemented by a browser extension as well, making the phishing detection process even easier. When navigating a suspicious website, the user will click the extension icon, and if the website is in English, they will click the 'English'. If not, the other button should be clicked. The extension uses the software's phishing detection methods, and it will display the results when they are ready.
+The phishing detection software is complemented by a browser extension as well, making the phishing detection process even easier. When navigating a suspicious website, the user will click the extension icon, and if the website is in English, they will click the 'English'. If not, the other button should be clicked.
 
 ![PhishingExtension1](https://github.com/tudormihail5/PhishingDetectionExtension/blob/main/Screenshot1.png)
+
+The extension uses the software's phishing detection methods, and it will display the results when they are ready.
 
 ![PhishingExtension2](https://github.com/tudormihail5/PhishingDetectionExtension/blob/main/Screenshot2.png)
 
